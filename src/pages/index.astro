@@ -1,16 +1,163 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects.filter((project) => project.data.featured);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Agung Tri Guritno - Site Reliability Engineer">
+  <section class="hero">
+    <h1>Agung Tri Guritno</h1>
+    <p class="subtitle">Site Reliability Engineer</p>
+    <p class="description">
+      8+ years of experience in cloud infrastructure, DevOps, and system automation.
+    </p>
+    <div class="cta-buttons">
+      <a href="/projects" class="btn-primary">View Projects</a>
+      <a href="mailto:agung.t.guritno@gmail.com" class="btn-secondary">Contact</a>
+    </div>
+  </section>
+
+  {featuredProjects.length > 0 && (
+    <section class="featured">
+      <h2>Featured Projects</h2>
+      <div class="project-grid">
+        {featuredProjects.map((project) => (
+          <a href={`/projects/${project.slug}`} class="card">
+            <h3>{project.data.title}</h3>
+            <p>{project.data.description}</p>
+            <div class="tags">
+              {project.data.tags.slice(0, 3).map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="skills">
+    <h2>Core Skills</h2>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <h3>Cloud Platforms</h3>
+        <p>AWS, GCP, Azure, Kubernetes, Docker</p>
+      </div>
+      <div class="skill-card">
+        <h3>DevOps & IaC</h3>
+        <p>Terraform, Ansible, Jenkins, GitHub Actions</p>
+      </div>
+      <div class="skill-card">
+        <h3>Monitoring</h3>
+        <p>Prometheus, Grafana, ELK Stack, OpenSearch</p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 1rem;
+    margin-bottom: 4rem;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .description {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .btn-primary, .btn-secondary {
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .btn-primary {
+    background: white;
+    color: #667eea;
+  }
+  
+  .btn-secondary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid white;
+  }
+  
+  .featured, .skills {
+    margin-bottom: 4rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .project-grid, .skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .card, .skill-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  .card {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .card h3 {
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .tag {
+    background: #e0e7ff;
+    color: #4338ca;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+  }
+</style>
