@@ -4,7 +4,7 @@ description: "Centralized Grafana dashboard for 500+ instances across AWS, GCP, 
 date: 2023-01-15
 tags: ["Grafana", "AWS", "GCP", "Azure", "Prometheus"]
 featured: true
-github: "https://github.com/yourusername/project"
+github: "https://github.com/ryoguritno/project"
 ---
 
 ## Overview
